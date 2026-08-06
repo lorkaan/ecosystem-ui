@@ -1,5 +1,5 @@
-import type { User } from "@ecosystem/foundation";
-import type { SavedQueryPermission } from "./savedQueryPermission";
+import type { User } from "@ecosystem/foundation"; // Question this path
+import type { SavedQueryPermission } from "./storedQueryPermission";
 
 export interface SavedQuery {
 
