@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@ecosystem/core-ui/*": ["packages/core-ui/src/*"],
-      "@ecosystem/*": ["packages/*/src"]
+       "@ecosystem/*": ["packages/*/src"]
     }
   }
 }

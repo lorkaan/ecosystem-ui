@@ -1,11 +1,12 @@
 {
-  "name": "@ecosystem/core-ui",
+  "name": "@ecosystem/queries",
   "version": "0.0.1",
   "private": true,
   "peerDependencies": {
     "vue": "^3.5.0"
   },
   "dependencies": {
-    "vuedraggable": "^4.1.0"
+    "@ecosystem/core-ui": "workspace:*",
+    "@ecosystem/foundation": "workspace:*"
   }
 }

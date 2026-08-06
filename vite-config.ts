@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
-      "@ecosystem/core-ui": path.resolve(__dirname, "packages/core-ui/src"),
+      "@ecosystem/foundation": path.resolve(__dirname, "packages/foundation/src"),
     },
   },
 });

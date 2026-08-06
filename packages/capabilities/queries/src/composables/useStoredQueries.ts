@@ -1,10 +1,13 @@
 import { ref } from "vue";
 
-import type { SavedQuery, ParamDef } from "../types/storedQuery";
+import type { ParamDef } from "../types/paramdef";
+import type { SavedQuery } from "../types/storedQuery";
 import type { StoredQueryResponse } from "../types/storedqueryresult";
 
 import { StoredQueryApiHandler } from "../api/StoredQueryApiHandler";
-import { formatIfDateTime } from "@ecosystem/core-ui/utils";
+import { formatIfDateTime } from "@ecosystem/core-ui";
+import { EMPTY_RECORD } from "@ecosystem/foundation";
+import { typedEntries } from "packages/foundation/src/utils/generic_entries";
 
 /* =========================================================
    Composable
@@ -37,7 +40,7 @@ export function useStoredQueries() {
   }
 
   function queryParams(): Record<string, ParamDef> {
-    return activeQuery()?.query?.params ?? {};
+    return activeQuery()?.query?.params ?? EMPTY_RECORD<string, ParamDef>();
   }
 
   function getFieldLabel(field: string): string {
@@ -77,7 +80,7 @@ export function useStoredQueries() {
 
     let autoRun = true;
 
-    for (const [key, def] of Object.entries(query.query.params)) {
+    for (const [key, def] of typedEntries<Record<string, ParamDef>>(query.query.params)) {
       if (def?.default !== undefined) {
         paramValues.value[key] = def.default;
       } else {

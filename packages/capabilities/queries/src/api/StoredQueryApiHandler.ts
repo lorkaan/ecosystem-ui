@@ -1,4 +1,4 @@
-import { DrfApiHandler } from "./drf_http";
+import { DrfApiHandler } from "@ecosystem/api-client";
 
 export class StoredQueryApiHandler extends DrfApiHandler{
 

@@ -1,4 +1,4 @@
-import type { User } from "@ecosystem/foundation"; // Question this path
+import type { User } from "@ecosystem/foundation";
 import type { SavedQueryPermission } from "./storedQueryPermission";
 
 export interface SavedQuery {
@@ -20,7 +20,7 @@ export interface SavedQuery {
     /**
      * JSONField from Django.
      */
-    query: Record<string, unknown>;
+    query: any;
 
     /**
      * Null for system queries.

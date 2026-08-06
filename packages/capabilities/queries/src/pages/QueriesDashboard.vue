@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+
 
 import QueryTabs from "../components/QueryTabs.vue";
 import QueryParameters from "../components/QueryParameters.vue";
-import ColumnSelector from "../components/ColumnSelector.vue";
-import QueryResultsTable from "../components/QueryResultsTable.vue";
-
+import ColumnSelector from "@ecosystem/core-ui/components/table/ColumnSelector.vue";
+import GenericDataTable from "@ecosystem/core-ui/components/table/GenericDataTable.vue";
+import type { SavedQuery } from "../types/storedQuery";
 import { useStoredQueries } from "../composables/useStoredQueries";
 
 /* --------------------
@@ -45,7 +46,7 @@ onMounted(async () => {
   try {
     await loadQueries();
 
-    const first = Object.values(queries.value)[0];
+    const first = Object.values(queries.value)[0] as SavedQuery | undefined;
     if (first) {
       activeId.value = first.id;
       resetParams(first);
@@ -82,7 +83,6 @@ function updateIdExists() {
 }
 
 /* Watch results to detect id field */
-import { watch } from "vue";
 watch(results, updateIdExists, { immediate: true });
 
 /* Placeholder navigation handler (you said ignore for now) */
@@ -134,17 +134,17 @@ function navToEditPage(row: Record<string, any>) {
 
       <!-- Column Selector -->
       <ColumnSelector
-        :allFields="allFields"
-        :selectedFields="selectedFields"
-        :getFieldLabel="getFieldLabel"
-        @update:selectedFields="setSelectedFields"
+        :availableColumns="allFields"
+        :selectedColumns="selectedFields"
+        :getColumnLabel="getFieldLabel"
+        @update:selectedColumns="setSelectedFields"
       />
 
       <!-- Results Table -->
-      <QueryResultsTable
-        :results="results"
-        :selectedFields="selectedFields"
-        :getFieldLabel="getFieldLabel"
+      <GenericDataTable
+        :rows="results"
+        :columns="selectedFields"
+        :getColumnLabel="getFieldLabel"
         :formatValue="prettifyFieldData"
         :clickable="idExists"
         @update:selectedFields="setSelectedFields"
