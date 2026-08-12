@@ -1,0 +1,1 @@
+export type DeadlineQueryItem = Record<string, any>;

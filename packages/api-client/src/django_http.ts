@@ -1,5 +1,5 @@
 import { CsrfApiHandler } from "./crsf_http";
-import { jsonMiddleware } from "./middleware";
+import { jsonMiddleware } from "./middlewares";
 import { RequestMiddleware } from "./http";
 
 export class DjangoJsonApiHandler extends CsrfApiHandler{}

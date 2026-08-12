@@ -1,7 +1,7 @@
 {
   "name": "dashboard",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.40"
+    "@ecosystem/calendar": "workspace:*",
+    "@ecosystem/core-ui": "workspace:*",
+    "@ecosystem/queries": "workspace:*",
+    "@ecosystem/api-client": "workspace:*",
+    "@ecosystem/foundation": "workspace:*",
+    "@ecosystem/auth": "workspace:*",
+    "vue": "^3.5.40",
+    "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",

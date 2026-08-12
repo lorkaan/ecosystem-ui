@@ -1,0 +1,1 @@
+export {default as QueriesDashbaord } from "./pages/QueriesDashboard.vue";

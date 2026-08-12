@@ -1,0 +1,1 @@
+export type EventQueryItem = Record<string, any>;

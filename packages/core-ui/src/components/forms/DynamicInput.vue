@@ -4,7 +4,9 @@ const props = defineProps<{
   type?: string
 }>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: any): void
+}>();
 
 function formatValue(value: any) {
 

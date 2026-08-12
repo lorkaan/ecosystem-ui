@@ -1,36 +1,27 @@
-import { DjangoJsonApiHandler } from "./django_http";
+import { DjangoApiPathHandler } from "./django_api_path";
+import { QueryParams } from "./types/queryParams";
 
-export class DrfApiHandler extends DjangoJsonApiHandler{
+export class DrfApiHandler extends DjangoApiPathHandler{
 
-    protected static apiPath = "/api";
+    static buildQueryString(params: QueryParams) {
+        const searchParams = new URLSearchParams()
 
-    protected static appNameUrl = "";
+        Object.entries(params).forEach(([key, value]) => {
+            searchParams.append(key, String(value))
+        })
 
-    static getAppNameUrl() {
-        return this.appNameUrl;
+        return searchParams.toString()
     }
 
-    static getApiPath() {
-        return this.apiPath;
-    }
-
-    static getAppPath(){
-        if(this.getApiPath().length > 0){
-            return this.joinUrls(this.getApiPath(), this.getAppNameUrl());
+    static list(params?: QueryParams) {
+        if(params){
+            return this.apiFetch(this.joinUrls(this.getPath(), `?${this.buildQueryString(params)}`));
         }else{
-            return this.getAppNameUrl()
+            return this.apiFetch(this.getPath());
         }
     }
 
-    static getPath(suffix: string = ""){
-        if(suffix.length > 0){
-            return this.joinUrls(this.getAppPath(), suffix);
-        }else{
-            return this.getAppPath()
-        }
-    }
-
-    static list() {
-        return this.apiFetch(this.getPath());
+    static filter_schema(){
+        return this.apiFetch(this.getPath("filter-schema"));
     }
 }
