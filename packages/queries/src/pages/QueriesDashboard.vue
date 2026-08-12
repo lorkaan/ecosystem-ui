@@ -29,7 +29,7 @@ const {
   loadQueries,
   resetParams,
   runActiveQuery,
-  //downloadActiveQuery,
+  downloadActiveQuery,
   setSelectedFields,
 } = useStoredQueries();
 
