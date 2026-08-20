@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "vuedraggable": "^4.1.0"
+  },
+  "scripts": {
+    "build": "vue-tsc --declaration --emitDeclarationOnly && vite build"
   }
 }

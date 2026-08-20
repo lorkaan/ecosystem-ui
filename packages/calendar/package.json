@@ -10,5 +10,8 @@
     "@ecosystem/core-ui": "workspace:*",
     "@ecosystem/foundation": "workspace:*",
     "@ecosystem/api-client": "workspace:*"
+  },
+  "scripts": {
+    "build": "vue-tsc --declaration --emitDeclarationOnly && vite build"
   }
 }
