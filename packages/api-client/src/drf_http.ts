@@ -1,5 +1,5 @@
 import { DjangoApiPathHandler } from "./django_api_path";
-import { QueryParams } from "./types/queryParams";
+import type { QueryParams } from "./types/queryParams";
 
 export class DrfApiHandler extends DjangoApiPathHandler{
 

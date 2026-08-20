@@ -1,8 +1,8 @@
 import { ref } from "vue";
 import { formatIfDateTime } from "@ecosystem/core-ui/index";
 import { DrfApiHandler } from "../drf_http";
-import { QueryListResponse } from "../types/queryResponse";
-import { QueryParams } from "../types/queryParams";
+import type { QueryListResponse } from "../types/queryResponse";
+import type { QueryParams } from "../types/queryParams";
 
 type DrfApiHandlerStatic = typeof DrfApiHandler;
 
