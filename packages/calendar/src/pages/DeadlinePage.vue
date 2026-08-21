@@ -5,7 +5,7 @@ import { DynamicFilter, ColumnSelector, GenericDataTable } from "@ecosystem/core
 
 import { useGenericQueries } from "@ecosystem/api-client";
 import { DeadlineApiHandler } from "../api/ScheduleApiHandler";
-import { DeadlineQueryItem } from "../types/deadline";
+import type { DeadlineQueryItem } from "../types/deadline";
 
 const {
   results,

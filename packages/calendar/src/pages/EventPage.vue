@@ -5,7 +5,7 @@ import { DynamicFilter, ColumnSelector, GenericDataTable } from "@ecosystem/core
 
 import { useGenericQueries } from "@ecosystem/api-client";
 import { EventApiHandler } from "../api/ScheduleApiHandler";
-import { EventQueryItem } from "../types/event";
+import type { EventQueryItem } from "../types/event";
 
 const {
   results,

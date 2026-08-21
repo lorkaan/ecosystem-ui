@@ -1,6 +1,6 @@
 import { shallowReactive , inject, type InjectionKey  } from "vue"
 import type { AuthHandlerInterface } from "../types/authHandler"
-import { AuthState, AuthStore } from "../types/authState"
+import type { AuthState, AuthStore } from "../types/authState"
 
 export function createAuthStore<TUser>(
   handler: AuthHandlerInterface,
