@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="TUser">
 import { useRouter } from "vue-router"
-import { AuthStore } from "@ecosystem/auth"
+import type { AuthStore } from "@ecosystem/auth"
 import { createToolbarLists } from "../types/toolbarItem";
 import type { ToolbarAuthLists, ToolbarItem } from "../types/toolbarItem";
 
