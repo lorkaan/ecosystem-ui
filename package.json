@@ -1,6 +1,11 @@
 {
   "private": true,
   "packageManager": "pnpm@10.17.0",
+  "devDependencies": {
+    "typescript": "^5.x",
+    "vue-tsc": "^2.x",
+    "vite": "^5.x"
+  },
   "scripts": {
     "build": "pnpm -r build"
   }
