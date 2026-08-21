@@ -1,4 +1,3 @@
-export * from "./utils/date";
 export { default as DynamicFilter } from "./components/table/DynamicFilter.vue"
 export { default as ColumnSelector } from "./components/table/ColumnSelector.vue"
 export { default as GenericDataTable } from "./components/table/GenericDataTable.vue"

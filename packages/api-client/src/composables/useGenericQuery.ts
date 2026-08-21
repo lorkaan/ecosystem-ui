@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { formatIfDateTime } from "@ecosystem/core-ui/index";
+import { formatIfDateTime } from "@ecosystem/foundation";
 import { DrfApiHandler } from "../drf_http";
 import type { QueryListResponse } from "../types/queryResponse";
 import type { QueryParams } from "../types/queryParams";

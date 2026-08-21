@@ -1,4 +1,3 @@
-
 export function formatIfDateTime(value: string) {
   // Try parsing
   const date = new Date(value);

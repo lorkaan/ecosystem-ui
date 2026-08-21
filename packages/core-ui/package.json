@@ -8,7 +8,8 @@
     "vue-router": "^5.2.0"
   },
   "dependencies": {
-    "vuedraggable": "^4.1.0"
+    "vuedraggable": "^4.1.0",
+    "@ecosystem/auth": "workspace:*"
   },
   "scripts": {
     "build": "vue-tsc --declaration --emitDeclarationOnly && vite build"

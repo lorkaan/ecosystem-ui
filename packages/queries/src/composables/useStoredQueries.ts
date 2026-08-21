@@ -5,7 +5,7 @@ import type { SavedQuery } from "../types/storedQuery";
 import type { StoredQueryResponse } from "../types/storedqueryresult";
 
 import { StoredQueryApiHandler } from "../api/StoredQueryApiHandler";
-import { formatIfDateTime } from "@ecosystem/core-ui";
+import { formatIfDateTime } from "@ecosystem/foundation";
 import { EMPTY_RECORD, typedEntries } from "@ecosystem/foundation";
 
 /* =========================================================
