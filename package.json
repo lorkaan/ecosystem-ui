@@ -3,6 +3,7 @@
   "packageManager": "pnpm@10.17.0",
   "devDependencies": {
     "typescript": "^5.x",
+    "vue": "^3.5.0",
     "vue-tsc": "^2.x",
     "vite": "^5.x"
   },
