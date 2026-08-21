@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
-import { FilterField, FilterOption } from "../types/filterTypes";
+import type { FilterField, FilterOption } from "../types/filterTypes";
 
 
 
