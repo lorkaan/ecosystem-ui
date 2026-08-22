@@ -7,11 +7,6 @@ const authStore = useAuthStore<User>();
 
 const toolbarItems: ToolbarItem[] = [
     {
-        path: "/dashboard",
-        label: "Reports",
-        visibility: "auth"
-    },
-    {
         path: "/events",
         label: "Events",
         visibility: "auth"
