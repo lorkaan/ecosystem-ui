@@ -23,9 +23,9 @@ export class DjangoApiPathHandler extends DjangoJsonApiHandler{
 
     static getPath(suffix: string = ""){
         if(suffix.length > 0){
-            return this.joinUrls(this.getAppPath(), suffix);
+            return this.joinUrls(this.getAppPath(), suffix) + "/";
         }else{
-            return this.getAppPath()
+            return this.getAppPath() + "/";
         }
     }
 }
