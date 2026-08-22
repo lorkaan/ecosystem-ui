@@ -79,6 +79,7 @@ export function createAuthStore<TUser>(
 export const AUTH_STORE_KEY = Symbol("authStore") as InjectionKey<AuthStore<any>>;
 
 export function useAuthStore<TUser>(): AuthStore<TUser> {
+  console.log("Inject KEY", AUTH_STORE_KEY);
   const store = inject(AUTH_STORE_KEY);
 
   if (!store) {

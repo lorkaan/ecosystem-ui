@@ -13,6 +13,7 @@ const authStore = createAuthStore<User>(
 );
 
 app.provide(AUTH_STORE_KEY, authStore);
+console.log("PROVIDE KEY", AUTH_STORE_KEY);
 
 app.use(router)
 
