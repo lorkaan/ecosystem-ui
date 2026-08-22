@@ -5,6 +5,8 @@ import { parseUser, type User } from './types/user.ts';
 import { BasicAuthApiHandler, createAuthStore, AUTH_STORE_KEY } from "@ecosystem/auth";
 import router from './router/index.ts';
 
+console.log("RUNNING MAIN.ts")
+
 const app = createApp(App);
 
 const authStore = createAuthStore<User>(
