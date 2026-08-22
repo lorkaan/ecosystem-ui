@@ -7,7 +7,7 @@ import Login from "../components/auth/Login.vue";
 import type { User } from '../types/user.ts';
 import { useAuthStore } from "@ecosystem/auth";
 
-const authStore = useAuthStore<User>()
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +49,8 @@ const router = createRouter({
 ---------------------------- */
 router.beforeEach(async (to) => {
   if (!to.meta.requiresAuth) return true
+
+  const authStore = useAuthStore<User>()  // ✅ inside runtime
 
   await authStore.checkAuth()
 
