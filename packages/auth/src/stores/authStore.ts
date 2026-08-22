@@ -7,6 +7,8 @@ export function createAuthStore<TUser>(
   parseUser: (data: unknown) => TUser | null,
 ): AuthStore<TUser> {
 
+  console.log("CREATING AUTH STORE");
+
   const state = shallowReactive <AuthState<TUser>>({
     isAuthenticated: false,
     user: null,
