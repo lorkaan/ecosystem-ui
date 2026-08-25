@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
 import type { FilterField, FilterOption } from "../types/filterTypes";
+import { capitalize } from "vue";
 
 
 
@@ -45,6 +46,26 @@ function updateFilters() {
 
   emit("update:filters", params)
 }
+
+function getFilterLabel(filter: any): string{
+  if(filter.label){
+    return filter.label;
+  }else if(filter.base){
+    return filter.base;
+  }else{
+    return "Unknown Filter";
+  }
+}
+
+function getCleanFilterLabel(filter: any){
+  const cur_label: string = getFilterLabel(filter);
+  const word_parts: string[] = cur_label.split("_");
+  let cap_words: string[] = [];
+  for( const word of word_parts){
+    cap_words.push(capitalize(word));
+  }
+  return cap_words.join(" ");
+}
 </script>
 
 <template>
@@ -54,7 +75,7 @@ function updateFilters() {
       :key="filter.name"
       class="filter-item"
     >
-      <label>{{ filter.label }} ({{ filter.lookup_label }})</label>
+      <label><span class="bold_text">{{ getCleanFilterLabel(filter) }}</span> ({{ filter.lookup_label }})</label>
 
       <!-- RELATION -->
       <select
@@ -112,6 +133,10 @@ function updateFilters() {
 </template>
 
 <style scoped>
+.bold_text{
+  font-weight: bold;
+}
+
 .filter-container {
   display: flex;
   flex-wrap: wrap;
