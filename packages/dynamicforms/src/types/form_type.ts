@@ -1,4 +1,4 @@
-import { Question } from "./form_question"
+import type { Question } from "./form_question"
 
 export interface FormType {
   id: string;
