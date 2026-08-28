@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import { computed } from "vue"
+import type { DateTimeRange } from "../../../types/datetimerange";
 
-type DateRange = {
-  start: string | null
-  end: string | null
-}
+// DateTimeRange is used cause its literally the same interface as a DateRange {start: string | null, end: string | null}
 
 const props = defineProps<{
-  modelValue: DateRange | null
+  modelValue: DateTimeRange | null
   question: any
 }>()
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: DateRange | null): void
+  (e: "update:modelValue", value: DateTimeRange | null): void
 }>()
 
-const value = computed<DateRange>({
+const value = computed<DateTimeRange>({
   get() {
     return props.modelValue || { start: null, end: null }
   },

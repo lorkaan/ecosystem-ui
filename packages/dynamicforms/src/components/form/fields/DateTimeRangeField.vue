@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import { DateTimeRange } from "../../../types/datetimerange";
+import type { DateTimeRange } from "../../../types/datetimerange";
 
 
 
