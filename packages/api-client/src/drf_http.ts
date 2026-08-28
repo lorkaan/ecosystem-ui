@@ -21,6 +21,10 @@ export class DrfApiHandler extends DjangoApiPathHandler{
         }
     }
 
+    static getById(id: string, options: RequestInit = {}){
+        return this.apiFetch(this.getPath(id), options);
+    }
+
     static filter_schema(){
         return this.apiFetch(this.getPath("filter-schema"));
     }

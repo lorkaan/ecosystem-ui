@@ -1,0 +1,1 @@
+export {default as FormPage} from "./components/pages/FormPage.vue";

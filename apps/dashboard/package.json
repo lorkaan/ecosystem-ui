@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ecosystem/dynamicforms": "workspace:*",
     "@ecosystem/calendar": "workspace:*",
     "@ecosystem/core-ui": "workspace:*",
     "@ecosystem/queries": "workspace:*",
