@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Answers } from "../../types/answers.js";
-import { FormType } from "../../types/form_type.js";
+import type { Answers } from "../../types/answers.js";
+import type { FormType } from "../../types/form_type.js";
 import DynamicField from "./DynamicField.vue"
 
 
