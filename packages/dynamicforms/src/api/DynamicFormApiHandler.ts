@@ -1,7 +1,12 @@
 import { DrfApiHandler } from "@ecosystem/api-client";
 
 
-export class DynamicFormTypeApiHandler extends DrfApiHandler{
+class DynamicFormApiHandler extends DrfApiHandler{
+
+    protected static apiPath = "/api/forms";
+}
+
+export class DynamicFormTypeApiHandler extends DynamicFormApiHandler{
 
     protected static appNameUrl = "form-types";
 
@@ -17,7 +22,7 @@ export class DynamicFormTypeApiHandler extends DrfApiHandler{
 
 }
 
-export class DynamicFormInstanceApiHandler extends DrfApiHandler {
+export class DynamicFormInstanceApiHandler extends DynamicFormApiHandler {
     protected static appNameUrl = "form-instances";
 
     static create(data: any) {
@@ -47,7 +52,7 @@ export class DynamicFormInstanceApiHandler extends DrfApiHandler {
     }
 }
 
-export class DynamicFormQuestionApiHandler extends DrfApiHandler{
+export class DynamicFormQuestionApiHandler extends DynamicFormApiHandler{
 
     protected static appNameUrl = "form-questions";
 }
