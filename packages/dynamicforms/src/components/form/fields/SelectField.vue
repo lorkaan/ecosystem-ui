@@ -13,9 +13,10 @@ function handleChange(e: Event) {
 
   if (target.multiple) {
     const values = Array.from(target.selectedOptions).map(o => o.value)
-    emit("update:modelValue", values)
+    emit("update:modelValue", values.length ? values : null)
   } else {
-    emit("update:modelValue", target.value)
+    const value = target.value
+    emit("update:modelValue", value === "" ? null : value)
   }
 }
 </script>
@@ -23,8 +24,14 @@ function handleChange(e: Event) {
 <template>
   <select
     :multiple="question?.schema?.multiple"
+    :value="modelValue"
     @change="handleChange"
   >
+    <!-- Placeholder -->
+    <option v-if="!question?.schema?.multiple" :value="''">
+      -- Select an option --
+    </option>
+
     <option
       v-for="opt in options"
       :key="opt.value"

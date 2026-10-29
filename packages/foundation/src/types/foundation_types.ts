@@ -1,0 +1,1 @@
+export type record_key = string | number;
