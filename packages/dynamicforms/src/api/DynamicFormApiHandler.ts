@@ -39,9 +39,10 @@ export class DynamicFormInstanceApiHandler extends DynamicFormApiHandler {
         });
     }
 
-    static submit(id: string) {
+    static submit(id: string, data: any) {
         return this.apiFetch(this.getPath(`${id}/submit`), {
             method: "POST",
+            body: JSON.stringify(data)
         });
     }
 

@@ -2,11 +2,13 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useFieldRegistry } from "../../composables/useFieldRegistry"
+import { FormQuestion } from "../../types/form_type.js";
+import { AnswerValue } from "../../types/form_answers";
 
-const props = defineProps({
-  question: Object,
-  modelValue: [String, Number, Object, Array],
-})
+const props = defineProps<{
+  question: FormQuestion,
+  modelValue: AnswerValue,
+}>()
 
 const emit = defineEmits(["update:modelValue"])
 

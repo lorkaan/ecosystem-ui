@@ -1,37 +1,18 @@
 <script setup lang="ts">
-import { onMounted } from "vue"
-import { useForm } from "../../composables/useForm"
-import DynamicForm from "../form/DynamicForm.vue"
+import { computed } from "vue";
+import DynamicFormWizard from "../form/DynamicFormWizard.vue"
 
-const {
-  form,
-  answers,
-  loadForm,
-  submit,
-  loading,
-  error
-} = useForm();
 
-const props = defineProps<{
-  formTypeCode: string
-}>()
+import { useRoute } from 'vue-router';
 
-onMounted(() => {
-  loadForm(props.formTypeCode)
-})
+const route = useRoute();
+
+const formTypeCode = computed(() => route.params.formTypeCode as string);
+
 </script>
 
 <template>
-  <div v-if="loading">Loading...</div>
-
-  <div v-else-if="error">
-    {{ error }}
-  </div>
-
-  <DynamicForm
-    v-else-if="form"
-    :form="form"
-    :answers="answers"
-    @submit="submit"
+  <DynamicFormWizard
+    :formTypeCode="formTypeCode"
   />
 </template>

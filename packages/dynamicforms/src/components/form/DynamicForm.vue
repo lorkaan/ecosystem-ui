@@ -1,55 +1,120 @@
 <script setup lang="ts">
-import type { Answers } from "../../types/answers.js";
-import type { FormType } from "../../types/form_type.js";
-import DynamicField from "./DynamicField.vue"
+import { computed, ref } from "vue";
+import { FormGroupInstance, FormSectionData } from "../../storage/formDataStorage.js";
+import { FormQuestion, FormType } from "../../types/form_type.js";
+import DynamicFormGroupWrapper from './DynamicFormGroupWrapper.vue';
+import { RegistryTree, TreeNode } from "../../objs/tree.js";
+import { useFormAnswers } from '../../composables/useFormAnswerStorage';
 
 
 const props = defineProps<{
-  form: FormType | null
-  answers: Answers
+  formType: FormType,
+  sections: FormSectionData,
+  getQuestionMetaData: (p: string | number) => FormQuestion | null
 }>()
 
 const emit = defineEmits(["submit"])
 
-const submit = () => {
-  const payload = {
-    form_type: props.form?.id,
-    answers: Object.entries(props.answers || {}).map(
-      ([question, value]) => ({
-        question,
-        value
-      })
-    )
-  }
+const curIndex= ref(props.sections.order.length > 0? 0: -1);
 
-  emit("submit", payload)
+function getCurrentTreeNode(): TreeNode<FormGroupInstance>[]{
+  if(curIndex.value >= 0 && curIndex.value < props.sections.order.length){
+    const regTree: RegistryTree<FormGroupInstance>[] = props.sections.nodes[props.sections.order[curIndex.value]] || [];
+    let rootList: TreeNode<FormGroupInstance>[] = [];
+    for(let i = 0; i < regTree.length; i++){
+      let curRoot: TreeNode<FormGroupInstance> | null = regTree[i].root;
+      if(curRoot != null){
+        rootList.push(curRoot);
+      }else{
+        continue;
+      }
+    }
+    return rootList;
+  }else{
+    return [];
+  }
 }
+
+const currentRootNodes = computed(getCurrentTreeNode);
+
+/**
+
+export interface FormSectionData{
+    order: (string | number)[];  // This is the order for the sections
+    nodes: Record<string | number, RegistryTree<FormGroupInstance>[]>; // These are lists of Trees representing the different FormGroup for each section
+    metadata: Record<string | number, FormSectionMetadata>;  // This is the metadata for each section (including things like title)
+}
+
+ */
+
+
+/** Runs the Submit functionality that does the intergration with the backend */
+const submit = () => {
+    emit("submit")
+}
+
+function nextSection(){
+  curIndex.value = curIndex.value + 1;
+}
+
+function gotToSubmit(): boolean{
+  return curIndex.value >= (props.sections.order.length - 1);
+}
+
+function goToReviewStep(): boolean{
+  return false;
+}
+
+const {
+        FormSections,
+        clone,
+        resetError,
+        getQuestionMetaData
+    } = useFormAnswers(props.formType);
+
+    /** Added the Answers for the Payload. */
+    function createPayloadAnswers(){
+        return {};
+    }
+
+    /** Create a Payload that can be understood by the backend. */
+    function createPayload(){
+        return {
+            form_type: props.formType?.id,
+            answers: createPayloadAnswers()
+        }
+    }
+
+    /** Needs to change along with the useForm() composable, which should be changed to be the specific backend interface of Forms */
+    function submitFormToBackend(){
+        const payload = createPayload();
+        submit()
+    }
+
 </script>
 
 <template>
-  <div v-if="form" class="form-container">
-    <!-- Header -->
-    <div class="form-header">
-      <h2 class="form-title">{{ form.name }}</h2>
-      <p v-if="form.description" class="form-description">
-        {{ form.description }}
-      </p>
-    </div>
+  <div class="form-container">
 
     <!-- Fields -->
     <div class="form-body">
-      <DynamicField
-        v-for="q in form.questions"
-        :key="q.id"
-        :question="q"
-        v-model="answers[q.id]"
+      <DynamicFormGroupWrapper
+        v-for="root in currentRootNodes"
+        :node="root"
+        :getQuestionMetaData="props.getQuestionMetaData"
       />
     </div>
 
     <!-- Actions -->
     <div class="form-actions">
-      <button class="btn-primary" @click="submit">
+      <button v-if="goToReviewStep()" class="btn-primary" @click="nextSection">
+        Review
+      </button>
+      <button v-else-if="gotToSubmit()" class="btn-primary" @click="submit">
         Submit
+      </button>
+      <button v-else class="btn-primary" @click="nextSection">
+        Next
       </button>
     </div>
   </div>

@@ -16,8 +16,3 @@ export interface QuestionAnswer{
     question: string | number;
     answer: AnswerValue;
 }
-
-export interface FormGroupInstance{
-    group: string | number;
-    answers: QuestionAnswer[];
-}

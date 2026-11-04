@@ -1,5 +1,6 @@
 import { Graph } from "../objs/graph";
 import { IdData, RegistryTree, Tree, TreeNode } from "../objs/tree";
+import { AnswerValue } from "../types/form_answers";
 import { FormGroup, FormQuestion, FormSection, FormType } from "../types/form_type";
 import { LocalIdHandler } from "../utils/localIdHandler";
 
@@ -8,12 +9,14 @@ import { LocalIdHandler } from "../utils/localIdHandler";
  * question_id or type_id (or maybe even a Local ID, like used in the Instance Graph)
  */
 
+
+
 interface FormAnswerInstance{
     question_id: string | number;
-    answer_value: any;
+    answer_value: AnswerValue;
 }
 
-interface FormGroupInstance extends IdData{
+export interface FormGroupInstance extends IdData{
     type_id: string | number;   // This is the ID of the FormGroup Metadata
     answers: FormAnswerInstance[];
 }
@@ -115,7 +118,7 @@ export class FormDataStorage{
      */
     buildMetaFromFormGroupBackendData(backendFormGroup: FormGroup){
         if(backendFormGroup.parent != null){
-            this.metaGraph.add(backendFormGroup.parent, backendFormGroup.id);   // Add the edge if the parent is not null
+            this.metaGraph.addEdge(backendFormGroup.parent, backendFormGroup.id);   // Add the edge if the parent is not null
         }else{
             // Parent is null, which means this is a Root Node. A Root Node is a FormGroup that is not a child to another FormGroup,
             // but rather is standalone within its Section (denoted by the backendFormGroup.section which is the Backend ID for the FormSection)
@@ -172,7 +175,9 @@ export class FormDataStorage{
 
             // Check if has Parent
             if(FormDataStorage.localIdValidation(parent)){
-                this.instanceGraph.add(parent, curGroupLocalID)
+                this.instanceGraph.addEdge(parent, curGroupLocalID)
+            }else{
+                this.instanceGraph.addVertex(curGroupLocalID);
             }
 
             for(const child of formGroup.children){
@@ -229,7 +234,40 @@ export class FormDataStorage{
         }
     }
 
-    addNewInstance(groupMetadataID: string | number){
+    getParents(instanceID: string): string[]{
+        if(FormDataStorage.localIdValidation(instanceID)){
+            const parents: string[] | null = this.instanceGraph.getBackEdges(instanceID);
+            if(parents == null){
+                return [];
+            }else{
+                return parents;
+            }
+        }else{
+            throw new Error(`Invalid Instace Local ID: ${instanceID}`)
+        }
+    }
+
+    getFormGroupMetadataIdForInstance(instanceID: string): string | number{
+        if(FormDataStorage.localIdValidation(instanceID)){
+            const instanceObject: FormGroupInstance | null = this.instanceRecord[instanceID] || null;
+            if(instanceObject == null){
+                throw new Error(`Instance Object can not be found for given Instance ID: ${instanceID}`);
+            }else{
+                const metadata: FormGroupMetaData | null = this.metaRecord[instanceObject.type_id] || null;
+                if(metadata == null){
+                    throw new Error(`Metadata associated with ID: ${instanceObject.type_id} was not found the given Instance ID: ${instanceID}`);
+                }else if(instanceID in metadata.instances){
+                    return metadata.formGroup.id;
+                }else{
+                    throw new Error(`Metadata with ID: ${metadata.formGroup.id} does not contain the given InstanceID: ${instanceID}`);
+                }
+            }
+        }else{
+            throw new Error(`The Instance ID: ${instanceID} is not valid`);
+        }
+    }
+
+    addNewInstance(groupMetadataID: string | number, oldInstanceID: string = ""){
         const formGroupMetadata: FormGroupMetaData | null = this.metaRecord[groupMetadataID] || null;
         if(formGroupMetadata == null){
             throw new Error(`No Metadata found for this Group Metadata ID: ${groupMetadataID}`)
@@ -244,17 +282,27 @@ export class FormDataStorage{
                 const instanceObj: FormGroupInstance | null = this.instanceRecord[newCurLocalID] || null;
                 if(instanceObj == null){
                     const answers: FormAnswerInstance[] = [];
-                    for(const question of formGroup.questions){
+                    for(const question of formGroupMetadata.formGroup.questions){
                         answers.push({
                             question_id: question.id,
                             answer_value: null
                         });
                     }
-                    this.instanceRecord[curGroupLocalID] = {
-                        type_id: formGroup.id,
-                        id: curGroupLocalID,
+                    this.instanceRecord[newCurLocalID] = {
+                        type_id: formGroupMetadata.formGroup.id,
+                        id: newCurLocalID,
                         answers: answers
                     };
+                    formGroupMetadata.instances.push(newCurLocalID)
+                    if(typeof(oldInstanceID) == 'string' && FormDataStorage.localIdValidation(oldInstanceID)){
+                        const parentInstanceIDs: string[] = this.getParents(oldInstanceID);
+                        for(const parent of parentInstanceIDs){
+                            this.instanceGraph.addEdge(parent, newCurLocalID)
+                        }
+                    }else{
+                        this.instanceGraph.addVertex(newCurLocalID);
+                    }
+
                 }else{
                     throw new LocalIdClash(`This ID already exists: ${newCurLocalID}\n\t`)
                 }

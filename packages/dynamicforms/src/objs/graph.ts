@@ -15,11 +15,27 @@ export class Graph<Key>{
         this.keyTransform = transform;
     }
 
+    addVertex(src: Key){
+        const src_lookup: string = this.keyTransform(src);
+        if(src_lookup.length <= 0){
+            throw new Error(`Can not get lookup ${src_lookup} from key: ${src}`);
+        }else{
+            let src_number: number | null = this.vertex_lookup[src_lookup] || null;
+            if(src_number == null){
+                src_number = this.vertex.length;
+                this.vertex.push(src);
+            }
+            if(this.vertex[src_number] == null){
+                this.vertex[src_number] = src;
+            }
+        }
+    }
+
     /** Adds an Edge to the Graph. 
      * If either side of the edge (or both) do not exist, it creates an entry for 
      * the vertex that do not.
      */
-    add(src: Key, dst: Key){
+    addEdge(src: Key, dst: Key){
         const src_lookup: string = this.keyTransform(src);
         const dst_lookup: string = this.keyTransform(dst);
         if(src_lookup.length <= 0){
@@ -134,5 +150,5 @@ export class Graph<Key>{
         }
     }
 
-    
+
 }
